@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maaf ya, Moza 💖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#ffe3ec; --bg2:#e9e1ff; --ink:#4a2c4f; --soft:#8b6a90;
+  --pink:#ff6b9a; --pink-d:#e0457b; --lav:#b69cff; --mint:#bdf0dc; --card:#fff9fc;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  overflow:hidden;
+}
+h1,h2,h3,.btn{font-family:'Baloo 2','Nunito',system-ui,sans-serif}
+#bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+#bg span{position:absolute;bottom:-40px;opacity:.55;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-115vh) rotate(25deg)}}
+
+.screen{
+  position:fixed;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:24px 20px;overflow-y:auto;text-align:center;
+  opacity:0;visibility:hidden;transform:scale(.92) translateY(30px);
+  transition:opacity .45s ease,transform .45s cubic-bezier(.3,1.4,.5,1),visibility .45s;
+}
+.screen.active{opacity:1;visibility:visible;transform:none}
+.screen.out{opacity:0;transform:scale(1.08) translateY(-30px)}
+.wrap{width:100%;max-width:440px;margin:auto}
+
+.big{font-size:84px;line-height:1;display:inline-block;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-12px) rotate(-4deg)}}
+.shake{animation:shake 1.6s ease-in-out infinite}
+@keyframes shake{0%,60%,100%{transform:rotate(0)}65%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}85%{transform:rotate(-8deg)}95%{transform:rotate(6deg)}}
+
+h1{font-size:2.3rem;font-weight:800;line-height:1.1;margin:14px 0 8px}
+h2{font-size:1.7rem;font-weight:800;margin-bottom:12px}
+p.sub{color:var(--soft);font-weight:600;margin-bottom:22px}
+
+.btn{
+  border:0;cursor:pointer;font-size:1.15rem;font-weight:700;color:#fff;background:var(--pink);
+  padding:13px 26px;border-radius:999px;box-shadow:0 6px 0 var(--pink-d);
+  transition:transform .12s,box-shadow .12s;touch-action:manipulation;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 var(--pink-d)}
+.btn:focus-visible,.menu button:focus-visible{outline:3px solid var(--lav);outline-offset:3px}
+.btn.alt{background:var(--lav);box-shadow:0 6px 0 #8c70e0}
+.btn.alt:active{box-shadow:0 1px 0 #8c70e0}
+.back{margin-top:22px;background:#fff;color:var(--ink);box-shadow:0 5px 0 #e3d3ea;font-size:1rem;padding:10px 22px}
+.back:active{box-shadow:0 1px 0 #e3d3ea}
+
+.menu{display:grid;gap:12px;margin-top:6px}
+.menu button{
+  display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;
+  background:var(--card);border:2.5px solid #ffd0e0;border-radius:22px;padding:14px 18px;
+  font:700 1.05rem 'Nunito',sans-serif;color:var(--ink);box-shadow:0 5px 0 #ffd0e0;
+  transition:transform .15s,box-shadow .15s,border-color .15s;
+}
+.menu button:hover{transform:translateY(-3px) rotate(-1deg);border-color:var(--pink)}
+.menu button:active{transform:translateY(3px);box-shadow:0 1px 0 #ffd0e0}
+.menu .em{font-size:1.9rem}
+.menu small{display:block;font-weight:600;color:var(--soft);font-size:.82rem}
+
+.card{background:var(--card);border-radius:26px;padding:22px 22px;box-shadow:0 10px 30px rgba(182,156,255,.3);text-align:left}
+.letter{line-height:1.7;font-size:1.02rem;min-height:300px;white-space:pre-wrap}
+.caret::after{content:"▌";color:var(--pink);animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.reasons{display:grid;gap:10px}
+.reasons .r{
+  background:var(--card);border-radius:20px;padding:14px 16px;text-align:left;font-weight:600;
+  cursor:pointer;border:2.5px dashed #ffc2d6;transition:transform .3s;
+}
+.reasons .r b{display:block;font-family:'Baloo 2';font-size:1.05rem}
+.reasons .r span{display:none;color:var(--soft);margin-top:4px}
+.reasons .r.open{transform:rotate(-1.2deg) scale(1.02);border-style:solid;border-color:var(--pink)}
+.reasons .r.open span{display:block;animation:pop .35s}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}}
+
+#bear{font-size:110px;cursor:pointer;user-select:none;display:inline-block;transition:transform .15s}
+#bear:active{transform:scale(.85) rotate(8deg)}
+#bubble{min-height:60px;margin-top:14px;font-weight:700;font-size:1.1rem}
+
+.q .big{font-size:96px}
+.q h1{font-size:2.1rem}
+.answers{position:relative;display:flex;gap:18px;justify-content:center;align-items:center;margin-top:26px;min-height:90px;flex-wrap:wrap}
+#yes{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+#no{background:#a79ab0;box-shadow:0 6px 0 #8a7d94}
+#no.run{position:fixed;z-index:50;transition:left .22s ease-out,top .22s ease-out}
+#hint{min-height:26px;margin-top:14px;color:var(--soft);font-weight:700}
+
+.fx{position:fixed;z-index:99;pointer-events:none;top:-40px;animation:confetti linear forwards}
+@keyframes confetti{to{transform:translateY(110vh) rotate(540deg)}}
+.win h1{font-size:2.5rem}
+.win .big{font-size:110px;animation:bob 1s ease-in-out infinite}
+
+
+#musicBtn{position:fixed;top:14px;right:14px;z-index:60;width:46px;height:46px;border-radius:50%;border:0;cursor:pointer;
+  background:#fff;font-size:22px;box-shadow:0 4px 0 #e3d3ea;display:none;align-items:center;justify-content:center}
+#musicBtn.show{display:flex}
+#musicBtn.on{animation:bob 2s ease-in-out infinite}
+#musicBtn:focus-visible{outline:3px solid var(--lav);outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div id="bg" aria-hidden="true"></div>
+<audio id="bgm" src="musik.mp3" loop preload="auto"></audio>
+<button id="musicBtn" aria-label="Nyalakan atau matikan musik">🎵</button>
+
+<!-- 1. Pembuka -->
+<section class="screen active" id="s-home">
+  <div class="wrap">
+    <div class="big shake">💌</div>
+    <h1>Hai, Moza…</h1>
+    <p class="sub">Ada sesuatu dari Boe, khusus buat kamu.</p>
+    <button class="btn" data-go="s-menu">Buka suratnya</button>
+  </div>
+</section>
+
+<!-- 2. Menu -->
+<section class="screen" id="s-menu">
+  <div class="wrap">
+    <h2>Pilih mau ngapain dulu 🎀</h2>
+    <p class="sub">Semuanya boleh dibuka, urutannya terserah kamu.</p>
+    <div class="menu">
+      <button data-go="s-letter"><span class="em">💌</span><span>Surat dari Boe<small>pesan yang Boe tulis pelan-pelan</small></span></button>
+      <button data-go="s-reasons"><span class="em">🥺</span><span>Kenapa Boe minta maaf<small>ketuk kartunya satu-satu</small></span></button>
+      <button data-go="s-bear"><span class="em">🧸</span><span>Colek Boe<small>coba ketuk beruangnya</small></span></button>
+      <button data-go="s-ask"><span class="em">💖</span><span>Pertanyaan penting<small>ini yang paling Boe tunggu</small></span></button>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Surat -->
+<section class="screen" id="s-letter">
+  <div class="wrap">
+    <h2>Surat buat Moza 💌</h2>
+    <div class="card"><div class="letter caret" id="letter"></div></div>
+    <button class="btn back" data-go="s-menu">← Kembali ke menu</button>
+  </div>
+</section>
+
+<!-- 4. Alasan -->
+<section class="screen" id="s-reasons">
+  <div class="wrap">
+    <h2>Kenapa Boe minta maaf 🥺</h2>
+    <p class="sub">Ketuk kartunya ya.</p>
+    <div class="reasons">
+      <div class="r" tabindex="0"><b>Boe sering sibuk sendiri</b><span>Boe terlalu tenggelam di dunia Boe, sampai lupa ada kamu yang nungguin.</span></div>
+      <div class="r" tabindex="0"><b>Boe ninggalin kamu</b><span>Bukan karena kamu nggak penting. Justru karena Boe sok yakin kamu bakal selalu ngerti.</span></div>
+      <div class="r" tabindex="0"><b>Boe telat sadar</b><span>Baru ngeh kalau sepi tanpa kamu itu nggak enak sama sekali.</span></div>
+      <div class="r" tabindex="0"><b>Kamu pantas diprioritasin</b><span>Dan Boe mau belajar jadi orang yang ada, bukan cuma niat.</span></div>
+    </div>
+    <button class="btn back" data-go="s-menu">← Kembali ke menu</button>
+  </div>
+</section>
+
+
+
+<!-- 7. Beruang -->
+<section class="screen" id="s-bear">
+  <div class="wrap">
+    <h2>Colek Boe 🧸</h2>
+    <div id="bear" role="button" tabindex="0" aria-label="Colek beruang">🧸</div>
+    <div id="bubble">Ketuk aku dong…</div>
+    <button class="btn back" data-go="s-menu">← Kembali ke menu</button>
+  </div>
+</section>
+
+<!-- 8. Pertanyaan -->
+<section class="screen q" id="s-ask">
+  <div class="wrap">
+    <div class="big">🥹</div>
+    <h1>Moza, maafin Boe ya?</h1>
+    <p class="sub">Boe janji bakal lebih ada buat kamu.</p>
+    <div class="answers">
+      <button class="btn" id="yes">Iya, aku maafin 💖</button>
+      <button class="btn" id="no">Nggak</button>
+    </div>
+    <div id="hint"></div>
+    <button class="btn back" data-go="s-menu" id="askBack">← Kembali ke menu</button>
+  </div>
+</section>
+
+<!-- 9. Menang -->
+<section class="screen win" id="s-win">
+  <div class="wrap">
+    <div class="big">🥰</div>
+    <h1>Yeayyy! Makasih, Moza!</h1>
+    <p class="sub">Boe senang banget. Boe janji nggak bakal ngecewain kamu lagi.<br>Dari Boe, yang sayang kamu 💕</p>
+    <button class="btn alt" id="again">Baca ulang dari awal</button>
+  </div>
+</section>
+
+<script>
+const NAMA_DIA = "Moza", NAMA_AKU = "Boe";
+
+/* Latar hati melayang */
+(function(){
+  const bg = document.getElementById('bg'), e = ['💗','💖','✨','🌸','💕','🫧'];
+  for(let i=0;i<16;i++){
+    const s = document.createElement('span');
+    s.textContent = e[i % e.length];
+    s.style.left = Math.random()*100+'%';
+    s.style.fontSize = (16+Math.random()*22)+'px';
+    s.style.animationDuration = (12+Math.random()*14)+'s';
+    s.style.animationDelay = (-Math.random()*20)+'s';
+    bg.appendChild(s);
+  }
+})();
+
+/* Transisi antar layar */
+let current = 'home', typer = null;
+function go(id){
+  const from = document.querySelector('.screen.active'), to = document.getElementById(id);
+  if(!to || from === to) return;
+  from.classList.add('out'); from.classList.remove('active');
+  setTimeout(()=>from.classList.remove('out'), 450);
+  to.classList.add('active');
+  if(id === 's-letter') typeLetter();
+  if(id === 's-ask') resetNo();
+}
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-go]');
+  if(t) go(t.dataset.go);
+});
+
+/* Surat */
+const LETTER = `Untuk ${NAMA_DIA},
+
+Maaf ya. Boe sering sibuk sama dunia Boe sendiri dan ninggalin kamu, padahal kamu selalu sabar nungguin.
+
+Boe nggak mau kamu ngerasa sendirian, apalagi ngerasa nggak penting. Kamu itu penting banget.
+
+Boe lagi belajar buat lebih hadir, lebih peka, dan lebih sering ada. Boleh ya Boe kasih kesempatan buat membuktikannya?
+
+Dengan sayang,
+${NAMA_AKU} 🧸`;
+function typeLetter(){
+  clearInterval(typer);
+  const el = document.getElementById('letter'); let i = 0;
+  el.textContent = ''; el.classList.add('caret');
+  typer = setInterval(()=>{
+    el.textContent = LETTER.slice(0, ++i);
+    if(i >= LETTER.length){ clearInterval(typer); el.classList.remove('caret'); }
+  }, 32);
+}
+
+/* Alasan */
+document.querySelectorAll('.r').forEach(r=>{
+  const t = ()=>r.classList.toggle('open');
+  r.addEventListener('click', t);
+  r.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); t(); }});
+});
+
+/* Beruang */
+const bearSays = ['Aduh, geli 🤭','Boe kangen kamu…','Maafin Boe ya 🥺','Kamu cantik banget hari ini','Jangan marah lagi dong 🫶','Boe janji nggak ngilang-ngilang','Peluk dulu sini 🤗','Aku tuh sayang kamu lho 💕'];
+let bi = 0;
+const bear = document.getElementById('bear');
+function poke(){ document.getElementById('bubble').textContent = bearSays[bi++ % bearSays.length]; }
+bear.addEventListener('click', poke);
+bear.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); poke(); }});
+
+/* Tombol "Nggak" yang kabur */
+const no = document.getElementById('no'), yes = document.getElementById('yes'), hint = document.getElementById('hint');
+const noTexts = ['Nggak','Yakin nih?','Coba lagi deh','Jangan gitu dong 🥺','Tombolnya capek ngejar','Pencet yang kiri aja…','Boe nangis nih 😭','Udah, pilih iya aja 💖'];
+let tries = 0;
+function resetNo(){
+  tries = 0; no.classList.remove('run'); no.style.left = no.style.top = '';
+  no.textContent = noTexts[0]; yes.style.transform = ''; hint.textContent = '';
+}
+function dodge(e){
+  if(e){ e.preventDefault(); }
+  tries++;
+  no.classList.add('run');
+  const w = no.offsetWidth, h = no.offsetHeight, pad = 12;
+  const x = pad + Math.random()*(window.innerWidth - w - pad*2);
+  const y = pad + Math.random()*(window.innerHeight - h - pad*2);
+  no.style.left = x+'px'; no.style.top = y+'px';
+  no.textContent = noTexts[Math.min(tries, noTexts.length-1)];
+  yes.style.transform = `scale(${Math.min(1 + tries*0.12, 1.9)})`;
+  hint.textContent = tries > 2 ? 'Tombol “Nggak” lagi nggak mau ditekan 😝' : '';
+}
+['pointerenter','pointerdown','touchstart','click','focus'].forEach(ev=>no.addEventListener(ev, dodge, {passive:false}));
+
+/* Hujan hati */
+function rain(list, n=50){
+  for(let i=0;i<n;i++){
+    const f = document.createElement('div'); f.className = 'fx';
+    f.textContent = list[Math.floor(Math.random()*list.length)];
+    f.style.left = Math.random()*100+'vw';
+    f.style.fontSize = (18+Math.random()*26)+'px';
+    f.style.animationDuration = (2.2+Math.random()*2.5)+'s';
+    f.style.animationDelay = (Math.random()*0.8)+'s';
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(), 6000);
+  }
+}
+yes.addEventListener('click', ()=>{
+  no.classList.remove('run'); no.style.left = no.style.top = '';
+  go('s-win'); rain(['💖','💗','🎉','✨','🌸','🧸'], 70);
+  setTimeout(()=>rain(['💕','🥰','🎊'], 40), 1500);
+});
+document.getElementById('again').addEventListener('click', ()=>go('s-home'));
+
+/* Musik latar (mulai setelah tombol pertama diklik, karena browser melarang autoplay) */
+const bgm = document.getElementById('bgm'), musicBtn = document.getElementById('musicBtn');
+function setMusic(on){
+  musicBtn.classList.toggle('on', on);
+  musicBtn.textContent = on ? '🎵' : '🔇';
+}
+document.querySelector('#s-home [data-go]').addEventListener('click', ()=>{
+  bgm.volume = 0.5;
+  const p = bgm.play();
+  if(p && p.then){
+    p.then(()=>{ musicBtn.classList.add('show'); setMusic(true); }).catch(()=>{});
+  }
+});
+musicBtn.addEventListener('click', ()=>{
+  if(bgm.paused){ bgm.play().then(()=>setMusic(true)).catch(()=>{}); }
+  else { bgm.pause(); setMusic(false); }
+});
+</script>
+</body>
+</html>
